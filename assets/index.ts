@@ -4,7 +4,7 @@ const Images = {
   coffee: require('./images/coffee.jpg'),
   phone: require('./images/phone.jpg'),
   // Add a fallback in case of missing images
-  placeholder: require('./images/placeholder.jpg')
+  
 };
 
 export default Images;
