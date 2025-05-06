@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import FloatingMenu from '../../components/FloatingMenu';
-import Images from '../../assets'; // Centralized asset registry
+import Images from '../../assets';
 
 const data = [
   { id: '1', title: 'Clothing Store', time: '2h', image: Images.cloth },
@@ -33,7 +33,7 @@ export default function HomeScreen() {
             width: '48%'
           }}>
             <Image
-              source={item.image || Images.placeholder}
+              source={item.image ? item.image : { uri: 'https://via.placeholder.com/100x100' }}
               style={{ height: 100, width: '100%' }}
               resizeMode="cover"
             />
