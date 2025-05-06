@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { TextInput, Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import api from '../../lib/api'; // Adjust based on your structure
+import api from '../../lib/api';
+import Images from '../../assets'; // Centralized image registry
 
 interface User {
   name: string;
@@ -71,7 +72,7 @@ export default function AccountScreen() {
           uri,
           name: filename,
           type,
-        } as any); // Small acceptable 'as any' for FormData (React Native limitation)
+        } as any);
 
         const token = await AsyncStorage.getItem('auth_token');
         if (!token) return;
@@ -98,31 +99,24 @@ export default function AccountScreen() {
 
   const handleLogout = async () => {
     try {
-      // Clear all related auth data
-      await AsyncStorage.multiRemove(['auth_token', 'user_data']); // if you ever store more than token
-  
-      // (Optional) You can clear everything if needed:
-      // await AsyncStorage.clear();
-  
-      // Reset navigation cleanly
+      await AsyncStorage.multiRemove(['auth_token', 'user_data']);
       router.replace('../../auth/login');
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
-  
 
   return (
     <View style={styles.container}>
       {/* Avatar */}
       <TouchableOpacity onPress={pickImageAndUpload}>
         <Image
-          source={user.avatar ? { uri: user.avatar } : require('../../assets/images/avatar-placeholder.png')}
+          source={user.avatar ? { uri: user.avatar } : Images.avatarPlaceholder}
           style={styles.avatar}
         />
       </TouchableOpacity>
 
-      {/* Username */}
+      {/* Username Section */}
       {!editingName ? (
         <>
           <Text style={styles.name}>{user.name}</Text>
