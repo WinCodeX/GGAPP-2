@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { FAB, Portal, Provider } from 'react-native-paper';
-//import CreatePackageModal from './CreatePackageModal'; // We'll build this next
+import { useRouter } from 'expo-router';
+// import CreatePackageModal from './CreatePackageModal';
 
-const FloatingMenu = ({ navigation, userRole }) => {
+const FloatingMenu = ({ userRole }) => {
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   const onStateChange = ({ open }) => setOpen(open);
 
@@ -23,37 +25,37 @@ const FloatingMenu = ({ navigation, userRole }) => {
               icon: 'package-variant',
               label: 'Create Package',
               onPress: () => setShowModal(true),
-              visible: ['admin', 'agent'].includes(userRole)
+              visible: ['admin', 'agent'].includes(userRole),
             },
             {
               icon: 'map-marker-path',
               label: 'Track Package',
-              onPress: () => navigation.navigate('TrackScreen')
+              onPress: () => router.push('/track'),
             },
             {
               icon: 'message-text',
               label: 'Chat',
-              onPress: () => navigation.navigate('ChatScreen')
+              onPress: () => router.push('/chat'),
             },
             {
               icon: 'briefcase-outline',
               label: 'Business Request',
-              onPress: () => navigation.navigate('BusinessScreen'),
-              visible: userRole === 'client'
-            }
+              onPress: () => router.push('/business'),
+              visible: userRole === 'client',
+            },
           ]}
           onStateChange={onStateChange}
           visible
         />
 
-        <CreatePackageModal
+        {/* <CreatePackageModal
           visible={showModal}
           onClose={() => setShowModal(false)}
           onSubmit={(data) => {
             console.log("Submit to API later:", data);
             setShowModal(false);
           }}
-        />
+        /> */}
       </Portal>
     </Provider>
   );
@@ -64,8 +66,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     bottom: 20,
-    backgroundColor: '#1d9bf0'
-  }
+    backgroundColor: '#1d9bf0',
+  },
 });
 
 export default FloatingMenu;

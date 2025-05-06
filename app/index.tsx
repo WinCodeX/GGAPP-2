@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
-import FloatingMenu from '../../components/FloatingMenu'; // Adjust path for new structure
+import FloatingMenu from '../components/FloatingMenu'; // Adjust path for new structure
 
 const data = [
   { id: '1', title: 'Clothing Store', time: '2h', image: require('../../assets/images/cloth.jpg') },
